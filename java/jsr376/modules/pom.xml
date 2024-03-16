@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.nc.edu.modules</groupId>
+	<artifactId>module-root</artifactId>
+	<version>1.0.0.0</version>
+	<packaging>pom</packaging>
+	<name>module-root</name>
+	<description>Root Producer Services</description>
+
+	<properties>
+		<java.version>21</java.version>
+		<jackson.version>2.13.1</jackson.version>
+		<junit.version>4.13.1</junit.version>
+		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+		<quarkus.platform.version>3.5.1</quarkus.platform.version>
+		<logstash.version>1.14.1</logstash.version>
+		<lombok.version>1.18.30</lombok.version>
+		<lucene.version>8.9.0</lucene.version>
+		<nats.version>2.8.0</nats.version>
+		<plugins.compiler.version>3.8.1</plugins.compiler.version>
+		<plugins.jandex.version>1.2.2</plugins.jandex.version>
+		<plugins.resource.version>3.3.0</plugins.resource.version>
+		<plugins.shade.version>3.2.4</plugins.shade.version>
+		<plugins.surefire.version>3.0.0-M7</plugins.surefire.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<slf4j.version>1.7.30</slf4j.version>
+		<slf4j.api.version>1.7.36</slf4j.api.version>
+		<spring-graalvm-native.version>0.8.5</spring-graalvm-native.version>
+		<spring.boot.version>2.4.3</spring.boot.version>
+	</properties>
+
+
+	<modules>
+		<module>lib</module>
+		<module>shared</module>
+		<module>model</module>
+		<module>api</module>
+		<module>imp</module>
+		<module>app</module>
+		<module>app-jlink</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>${quarkus.platform.group-id}</groupId>
+				<artifactId>${quarkus.platform.artifact-id}</artifactId>
+				<version>${quarkus.platform.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.quarkus.platform</groupId>
+				<artifactId>quarkus-amazon-services-bom</artifactId>
+				<version>${quarkus.platform.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jdk8</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-parameter-names</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${plugins.resource.version}</version>
+					<configuration>
+						<nonFilteredFileExtensions>
+							<nonFilteredFileExtension>bin</nonFilteredFileExtension>
+							<nonFilteredFileExtension>cert</nonFilteredFileExtension>
+							<nonFilteredFileExtension>css</nonFilteredFileExtension>
+							<nonFilteredFileExtension>dae</nonFilteredFileExtension>
+							<nonFilteredFileExtension>dll</nonFilteredFileExtension>
+							<nonFilteredFileExtension>eot</nonFilteredFileExtension>
+							<nonFilteredFileExtension>exe</nonFilteredFileExtension>
+							<nonFilteredFileExtension>glb</nonFilteredFileExtension>
+							<nonFilteredFileExtension>gltf</nonFilteredFileExtension>
+							<nonFilteredFileExtension>jasper</nonFilteredFileExtension>
+							<nonFilteredFileExtension>jks</nonFilteredFileExtension>
+							<nonFilteredFileExtension>js</nonFilteredFileExtension>
+							<nonFilteredFileExtension>less</nonFilteredFileExtension>
+							<nonFilteredFileExtension>lib</nonFilteredFileExtension>
+							<nonFilteredFileExtension>map</nonFilteredFileExtension>
+							<nonFilteredFileExtension>nnet</nonFilteredFileExtension>
+							<nonFilteredFileExtension>otf</nonFilteredFileExtension>
+							<nonFilteredFileExtension>png</nonFilteredFileExtension>
+							<nonFilteredFileExtension>so</nonFilteredFileExtension>
+							<nonFilteredFileExtension>svg</nonFilteredFileExtension>
+							<nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+							<nonFilteredFileExtension>woff</nonFilteredFileExtension>
+							<nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${plugins.compiler.version}</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<parameters>true</parameters>
+						<fork>false</fork>
+						<annotationProcessorPaths>
+							<path>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+								<version>1.18.22</version>
+							</path>
+						</annotationProcessorPaths>
+						<compilerArgs>
+							<arg>-parameters</arg>
+							<arg>--enable-preview</arg>
+							<arg>--add-modules</arg>
+							<arg>jdk.incubator.vector</arg>
+							<arg>--add-opens</arg>
+							<arg>java.base/java.util=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/java.lang.foreign=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.foreign=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.misc=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.reflect=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.org.objectweb.asm.commons=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.org.objectweb.asm.util=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/sun.nio.ch=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.loader=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/jdk.internal.ref=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/sun.security.util=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.base/sun.security.x509=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.desktop/sun.awt.image=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.desktop/com.sun.beans.introspect=ALL-UNNAMED</arg>
+							<arg>--add-exports</arg>
+							<arg>java.desktop/com.sun.beans.util=ALL-UNNAMED</arg>
+						</compilerArgs>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jboss.jandex</groupId>
+					<artifactId>jandex-maven-plugin</artifactId>
+					<version>${plugins.jandex.version}</version>
+					<executions>
+						<execution>
+							<id>make-index</id>
+							<goals>
+								<goal>jandex</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>io.quarkus.platform</groupId>
+					<artifactId>quarkus-maven-plugin</artifactId>
+					<version>${quarkus.platform.version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<compilerArgs>
+							<arg>--enable-preview</arg>
+						</compilerArgs>
+						<jvmArgs>--enable-preview --enable-native-access=ALL-UNNAMED
+							-XX:+UnlockExperimentalVMOptions -Xmx256m --add-modules
+							jdk.incubator.vector,jdk.incubator.concurrent --add-opens
+							java.base/java.time=ALL-UNNAMED --add-opens
+							java.management/java.lang.management=ALL-UNNAMED --add-opens
+							java.base/java.lang=ALL-UNNAMED --add-opens
+							java.base/java.util=ALL-UNNAMED --add-opens
+							java.base/java.math=ALL-UNNAMED --add-opens
+							java.base/jdk.internal.misc=ALL-UNNAMED --add-opens
+							java.base/java.lang.invoke=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.misc=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.reflect=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.org.objectweb.asm.util=ALL-UNNAMED --add-exports
+							java.base/sun.nio.ch=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.ref=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.util=ALL-UNNAMED --add-exports
+							jdk.incubator.vector/jdk.incubator.vector=ALL-UNNAMED
+							-Duser.timezone=UTC</jvmArgs>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>build</goal>
+								<goal>generate-code</goal>
+								<goal>generate-code-tests</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>${plugins.shade.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.2.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${plugins.surefire.version}</version>
+					<configuration>
+						<systemPropertyVariables>
+							<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+							<maven.home>${maven.home}</maven.home>
+						</systemPropertyVariables>
+						<argLine>--enable-preview --enable-native-access=ALL-UNNAMED
+							-XX:+UnlockExperimentalVMOptions -Xmx256m -XX:MaxDirectMemorySize=40g
+							--add-modules jdk.incubator.vector --add-opens
+							java.base/java.time=ALL-UNNAMED --add-opens
+							java.management/java.lang.management=ALL-UNNAMED --add-opens
+							java.base/java.lang=ALL-UNNAMED --add-opens
+							java.base/java.util=ALL-UNNAMED --add-opens
+							java.base/java.math=ALL-UNNAMED --add-opens
+							java.base/jdk.internal.misc=ALL-UNNAMED --add-opens
+							java.base/java.lang.invoke=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.misc=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.reflect=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.org.objectweb.asm.util=ALL-UNNAMED --add-exports
+							java.base/sun.nio.ch=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.ref=ALL-UNNAMED --add-exports
+							java.base/jdk.internal.util=ALL-UNNAMED --add-exports
+							jdk.incubator.vector/jdk.incubator.vector=ALL-UNNAMED
+							-Duser.timezone=UTC</argLine>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jlink-plugin</artifactId>
+					<version>3.2.0</version>
+					<extensions>true</extensions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.jboss.jandex</groupId>
+				<artifactId>jandex-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<!--plugin>
+				<groupId>io.quarkus.platform</groupId>
+				<artifactId>quarkus-maven-plugin</artifactId>
+			</!-plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin-->
+		</plugins>
+	</build>
+</project>

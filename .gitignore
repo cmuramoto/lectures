@@ -1,0 +1,14 @@
+target
+node_modules
+dependency-reduced-pom.xml
+.DS_Store
+.vscode
+.classpath
+.project
+.settings
+.location
+.metadata
+.idea
+.envrc
+*.swp
+hs_err_pid*

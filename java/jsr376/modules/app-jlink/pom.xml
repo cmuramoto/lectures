@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.nc.edu.modules</groupId>
+		<artifactId>module-root</artifactId>
+		<version>1.0.0.0</version>
+	</parent>
+	<artifactId>app-jlink</artifactId>
+	<packaging>jlink</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jlink-plugin</artifactId>
+				<configuration>
+					<compress>2</compress>
+					<launcher>app=com.nc.edu.modules.app/com.nc.edu.modules.app.EntryPoint</launcher>
+					<noHeaderFiles>true</noHeaderFiles>
+					<noManPages>true</noManPages>
+					<stripDebug>true</stripDebug>
+					<verbose>true</verbose>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+
+</project>
